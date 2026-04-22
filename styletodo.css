@@ -1,0 +1,1592 @@
+@font-face {
+    font-family: 'Estedad';
+    src: url('./fonts/Estedad-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro', 'Estedad';
+}
+
+@font-face {
+    font-family: 'SF Pro';
+    src: url('./fonts/SF_Pro_Rounded_Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    transition: background 0.2s, color 0.2s;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body.light {
+    background: #ffffff;
+    color: #111111;
+}
+
+body.dark {
+    background: #000000;
+    color: #eaeaea;
+}
+
+/* Borders */
+body.light .sidebar,
+body.light .period-col,
+body.light .task-item,
+body.light .timer-display,
+body.light .task-selector,
+body.light .day-card,
+body.light .calendar-cell,
+body.light .day-stats-box,
+
+body.light .modal-container,
+body.light .custom-alert,
+body.light .mindmap-card,
+body.light .graveyard-card,
+body.light .todo-container,
+body.light .profile-card,
+body.light .chat-panel-right {
+    border-color: #e0e0e0;
+}
+
+body.dark .sidebar,
+body.dark .period-col,
+body.dark .task-item,
+body.dark .timer-display,
+body.dark .task-selector,
+body.dark .day-card,
+body.dark .calendar-cell,
+body.dark .day-stats-box,
+body.dark .session-sidebar,
+body.dark .modal-container,
+body.dark .custom-alert,
+body.dark .mindmap-card,
+body.dark .graveyard-card,
+body.dark .todo-container,
+body.dark .profile-card,
+body.dark .chat-panel-right {
+    border-color: #2a2a2a;
+}
+
+body.light .sidebar button,
+body.light .control-btn svg,
+body.light .mindmap-add-btn,
+body.light .session-btn-timer,
+body.light .day-nav button,
+body.light .nav-cal-btn {
+    color: #111;
+    fill: #111;
+}
+
+body.dark .sidebar button,
+body.dark .control-btn svg,
+body.dark .mindmap-add-btn,
+body.dark .session-btn-timer,
+body.dark .day-nav button,
+body.dark .nav-cal-btn {
+    color: #eaeaea;
+    fill: #eaeaea;
+}
+
+body.light .nav-item.active {
+    background: #111;
+    color: #fff;
+}
+
+body.dark .nav-item.active {
+    background: #eaeaea;
+    color: #000;
+}
+
+body.light .task-item.completed {
+    background: #d4edda;
+    border-color: #9bcd9b;
+}
+
+body.dark .task-item.completed {
+    background: #1e3a2f;
+    border-color: #2e6b47;
+}
+
+body.light .task-item.overdue {
+    background: #ffe0e0;
+    border-color: #ffaaaa;
+    color: #a00;
+}
+
+body.dark .task-item.overdue {
+    background: #3a1e1e;
+    border-color: #aa5555;
+    color: #ffaaaa;
+}
+
+/* ======================== HAMBURGER BUTTON - Arrow > ======================== */
+.hamburger-btn {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1001;
+    width: 32px;
+    height: 64px;
+    background: #111;
+    border: none;
+    border-radius: 0 16px 16px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+}
+
+body.dark .hamburger-btn {
+    background: #eaeaea;
+}
+
+.hamburger-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s;
+}
+
+body.light .hamburger-btn svg {
+    fill: white;
+    stroke: white;
+}
+
+body.dark .hamburger-btn svg {
+    fill: #111;
+    stroke: #111;
+}
+
+/* وقتی منو باز است، دکمه مخفی می‌شود */
+.hamburger-btn.open {
+    display: none;
+}
+
+.hamburger-btn .icon-close {
+    display: none;
+}
+
+/* ======================== SIDEBAR (منوی اصلی) ======================== */
+.sidebar {
+    width: 240px;
+    border-right: 1px solid;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 16px;
+    gap: 12px;
+    flex-shrink: 0;
+    background: inherit;
+    overflow-y: auto;
+}
+
+body.light .sidebar {
+    border-color: #e0e0e0;
+}
+
+body.dark .sidebar {
+    border-color: #2a2a2a;
+}
+
+/* ======================== RESPONSIVE - HAMBURGER MENU ======================== */
+@media (max-width: 768px) {
+    .hamburger-btn {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100vh;
+        z-index: 1000;
+        background: #1a1a2e;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        border-right: none;
+    }
+
+    body.dark .sidebar {
+        background: #0d0d1a;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* لایه تاریک پشت سایدبار */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@media (min-width: 769px) {
+    .hamburger-btn {
+        display: none;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+}
+
+/* ======================== SESSION SIDEBAR (سایدبار راست - سشن‌ها) ======================== */
+.session-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 340px;
+    height: 100%;
+    transform: translateX(100%);
+    transition: 0.25s ease;
+    z-index: 200;
+    padding: 32px 24px;
+    overflow-y: auto;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.session-sidebar.open {
+    transform: translateX(0);
+}
+
+
+.session-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.session-divider {
+    height: 2px;
+    margin-bottom: 24px;
+
+}
+
+body.dark .session-divider {
+    background: #2a2a2a;
+}
+
+.session-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.dark .session-item {
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.session-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.session-meta {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+.session-empty {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.6;
+}
+
+/* دکمه باز کردن سایدبار سشن در حالت تایمر */
+.session-btn-timer {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 8px 24px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+
+/* Dark mode - پس‌زمینه تیره یکدست */
+body.dark .session-sidebar {
+    background: #1a1a1a;
+    border-left: 1px solid #2a2a2a;
+}
+
+
+/* دکمه همبرگر سشن (برای موبایل - مخفی) */
+.hamburger-session-btn {
+    display: none;
+}
+
+/* تسک Failed Manual - قرمز */
+.task-item.failed-manually {
+    background-color: #ffe0e0 !important;
+    border-left: 4px solid #dc3545 !important;
+    opacity: 0.85;
+}
+
+/* برای تم دارک */
+body.dark .task-item.failed-manually {
+    background-color: #4a1a1a !important;
+    border-left: 4px solid #ff6b6b !important;
+    color: #ffaaaa;
+}
+
+/* Modal Styles - Premium Dark/Light Adaptive */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.2s, opacity 0.2s;
+}
+
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-container {
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 40px 36px;
+    width: 460px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+
+/* Dark Theme Support */
+body.dark .modal-container {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+.modal-container h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 28px;
+    color: #111;
+    letter-spacing: -0.3px;
+}
+
+body.dark .modal-container h3 {
+    color: #fff;
+}
+
+/* Input Fields - Dark Background, White Text */
+.modal-container input {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border: 1.5px solid #111;
+    border-radius: 60px;
+    background: #111;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+body.dark .modal-container input {
+    border: 1.5px solid #333;
+    background: #0a0a0a;
+    color: #fff;
+}
+
+.modal-container input:focus {
+    border-color: #666;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-container input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+}
+
+/* Time Input Group - Premium Design */
+.time-input-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 8px 0;
+}
+
+.time-input {
+    width: 85px;
+    padding: 14px 0;
+    text-align: center;
+    border: 1.5px solid #111;
+    border-radius: 40px;
+    background: #111;
+    color: #fff;
+    font-family: 'SF Pro', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    outline: none;
+}
+
+body.dark .time-input {
+    border: 1.5px solid #333;
+    background: #0a0a0a;
+}
+
+.time-input:focus {
+    border-color: #888;
+    transform: scale(1.02);
+}
+
+.time-input-group span {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #111;
+}
+
+body.dark .time-input-group span {
+    color: #fff;
+}
+
+/* Modal Buttons - Premium Glassmorphism */
+.modal-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 12px 24px;
+    border-radius: 60px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+}
+
+#modalOkBtn {
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+}
+
+body.dark #modalOkBtn {
+    background: #fff;
+    color: #111;
+    border: 1px solid #fff;
+}
+
+#modalOkBtn:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+body.dark #modalOkBtn:hover {
+    background: #e0e0e0;
+}
+
+#modalCancelBtn {
+    background: transparent;
+    color: #111;
+    border: 1.5px solid #111;
+}
+
+body.dark #modalCancelBtn {
+    color: #fff;
+    border: 1.5px solid #fff;
+    background: transparent;
+}
+
+#modalCancelBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+body.dark #modalCancelBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Modal */
+@media (max-width: 520px) {
+    .modal-container {
+        width: 90%;
+        padding: 28px 20px;
+    }
+
+    .time-input {
+        width: 65px;
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+
+    .time-input-group span {
+        font-size: 1.2rem;
+    }
+
+    .modal-buttons button {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+
+    .modal-container h3 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 240px;
+    border-right: 1px solid;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 16px;
+    gap: 12px;
+    flex-shrink: 0;
+    background: inherit;
+    overflow-y: auto;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 450;
+    text-align: left;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: 0.1s;
+}
+
+.nav-item.active {
+    font-weight: 600;
+}
+
+.theme-toggle {
+    margin-top: auto;
+    border-top: 1px solid;
+    padding-top: 20px;
+}
+
+.main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px;
+    position: relative;
+}
+
+.view {
+    display: none;
+}
+
+.active-view {
+    display: block;
+}
+
+/* Home */
+.day-nav {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    align-items: center;
+}
+
+.day-nav button {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 6px 18px;
+    cursor: pointer;
+}
+
+.period-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.period-col {
+    flex: 1;
+    min-width: 240px;
+    border: 1px solid;
+    border-radius: 28px;
+    padding: 20px;
+}
+
+.period-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+}
+
+/* Fix for add-task-btn in dark mode */
+.add-task-btn {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Light mode */
+body.light .add-task-btn {
+    background: transparent;
+    color: #111;
+    border-color: #111;
+}
+
+body.light .add-task-btn:hover {
+    background: #111;
+    color: #fff;
+}
+
+/* Dark mode - white border, white text, transparent bg */
+body.dark .add-task-btn {
+    background: transparent;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+body.dark .add-task-btn:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.task-title {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.task-time {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+/* Timer */
+.timer-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+}
+
+.timer-display {
+    font-size: 5rem;
+    font-weight: 500;
+    font-family: 'SF Pro';
+    border: 1px solid;
+    padding: 30px 60px;
+    border-radius: 60px;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.control-btn svg {
+    width: 46px;
+    height: 46px;
+}
+
+.task-selector {
+    padding: 12px 24px;
+    border: 1px solid;
+    border-radius: 60px;
+    background: transparent;
+    width: 280px;
+}
+
+.session-btn-timer {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 8px 24px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.timer-fullscreen-mode .timer-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    z-index: 1000;
+    justify-content: center;
+    margin: 0;
+}
+
+.timer-fullscreen-mode .timer-display {
+    font-size: 10rem;
+    border: none;
+    padding: 0;
+}
+
+.timer-fullscreen-mode .timer-controls,
+.timer-fullscreen-mode .task-selector,
+.timer-fullscreen-mode .session-btn-timer {
+    display: none;
+}
+
+/* Analytics */
+.chart-container {
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.daily-breakdown {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.day-card {
+    border: 1px solid;
+    border-radius: 24px;
+    padding: 18px;
+}
+
+/* Calendar + Heatmap */
+.calendar-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.nav-cal-btn {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 6px 18px;
+    cursor: pointer;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.calendar-cell {
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 12px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.calendar-cell.heat-0 {
+    background: transparent;
+}
+
+.calendar-cell.heat-1 {
+    background: #ffcdd2;
+}
+
+/* red - bad */
+.calendar-cell.heat-2 {
+    background: #ffcc80;
+}
+
+/* orange - medium */
+.calendar-cell.heat-3 {
+    background: #a5d6a7;
+}
+
+/* light green - good */
+.calendar-cell.heat-4 {
+    background: #66bb6a;
+}
+
+/* green - very good */
+.calendar-cell.heat-5 {
+    background: #2e7d32;
+    color: white;
+}
+
+/* dark green - excellent */
+body.dark .calendar-cell.heat-1 {
+    background: #5c2e2e;
+    color: #ffaaaa;
+}
+
+body.dark .calendar-cell.heat-2 {
+    background: #5c4a2e;
+    color: #ffcc80;
+}
+
+body.dark .calendar-cell.heat-3 {
+    background: #2e5c3e;
+    color: #a5d6a7;
+}
+
+body.dark .calendar-cell.heat-4 {
+    background: #1e4a2e;
+    color: #c8e6c9;
+}
+
+body.dark .calendar-cell.heat-5 {
+    background: #0d3b1a;
+    color: #e8f5e9;
+}
+
+.day-stats-box {
+    border: 1px solid;
+    border-radius: 24px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Mind Map */
+.mindmap-card {
+    border: 1px solid;
+    border-radius: 32px;
+    padding: 32px 24px;
+    position: relative;
+    min-height: 500px;
+}
+
+.mindmap-delete-all {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: rgba(255, 80, 80, 0.15);
+    border: 1px solid #ff8888;
+    border-radius: 30px;
+    padding: 6px 18px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #d44;
+}
+
+.mindmap-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.mindmap-node-v {
+    border: 2px solid;
+    border-radius: 80px;
+    padding: 18px 36px;
+    cursor: pointer;
+    transition: 0.2s;
+    min-width: 200px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.mindmap-node-v.completed {
+    background: #d4edda;
+    border-color: #9bcd9b;
+}
+
+body.dark .mindmap-node-v.completed {
+    background: #1e3a2f;
+}
+
+.mindmap-node-v.current {
+    border-width: 4px;
+    transform: scale(1.05);
+}
+
+.vertical-arrow {
+    width: 2px;
+    height: 30px;
+    background: currentColor;
+    margin: -10px 0;
+    position: relative;
+}
+
+.vertical-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: -4px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid currentColor;
+}
+
+.mindmap-add-btn {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 8px 24px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* Graveyard */
+.graveyard-card {
+    border: 1px solid;
+    border-radius: 28px;
+    padding: 24px;
+}
+
+.graveyard-card h3 {
+    margin-bottom: 16px;
+}
+
+.grave-item {
+    padding: 10px 0;
+    border-bottom: 1px solid;
+}
+
+/* Profile */
+.profile-card {
+    border: 1px solid;
+    border-radius: 32px;
+    padding: 28px;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0e0e0;
+    overflow: hidden;
+}
+
+body.dark .profile-avatar {
+    background: #2a2a2a;
+}
+
+.profile-avatar svg {
+    width: 60px;
+    height: 60px;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.profile-xp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    font-size: 1.1rem;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 24px 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.level-badge {
+    margin-top: 16px;
+    font-size: 1rem;
+}
+
+/* TODO COMPANION - Full page */
+.todo-container {
+    border: 1px solid;
+    border-radius: 32px;
+    padding: 32px;
+    min-height: 70vh;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.todo-left {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 280px;
+}
+
+.todo-avatar {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+.todo-avatar svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+    transition: all 0.2s;
+}
+
+.todo-speech {
+    background: rgba(136, 146, 158, 0.15);
+    border-radius: 28px;
+    padding: 16px 24px;
+    margin: 24px 0;
+    max-width: 300px;
+    text-align: center;
+    font-size: 1rem;
+    position: relative;
+    animation: fadeInUp 0.3s ease;
+}
+
+.todo-speech::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid rgba(136, 146, 158, 0.15);
+}
+
+.todo-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid;
+    padding-left: 24px;
+    min-width: 280px;
+}
+
+.chat-messages-area {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-right: 8px;
+}
+
+.chat-bubble {
+    max-width: 85%;
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.chat-bubble.user {
+    align-self: flex-end;
+    background: #e0e0e0;
+    color: #111;
+}
+
+body.dark .chat-bubble.user {
+    background: #2a2a2a;
+    color: #fff;
+}
+
+.chat-bubble.bot {
+    align-self: flex-start;
+    border: 1px solid;
+}
+
+.chat-input-group {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.chat-input-group input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid;
+    border-radius: 40px;
+    background: transparent;
+    font-family: inherit;
+}
+
+/* Fix for chat input in dark mode - makes text visible */
+.chat-input-group input,
+#todoChatInput {
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid;
+    border-radius: 40px;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    outline: none;
+}
+
+/* Light mode */
+body.light .chat-input-group input,
+body.light #todoChatInput {
+    background: #f5f5f5;
+    color: #111;
+    border-color: #ddd;
+}
+
+body.light .chat-input-group input:focus,
+body.light #todoChatInput:focus {
+    border-color: #111;
+    background: #fff;
+}
+
+/* Dark mode - white text on dark background */
+body.dark .chat-input-group input,
+body.dark #todoChatInput {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark .chat-input-group input:focus,
+body.dark #todoChatInput:focus {
+    border-color: #888;
+    background: #222;
+}
+
+body.dark .chat-input-group input::placeholder,
+body.dark #todoChatInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Send button styling */
+.chat-send-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+body.light .chat-send-btn {
+    color: #111;
+}
+
+body.dark .chat-send-btn {
+    color: #fff;
+}
+
+.chat-send-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+/* Context Menu */
+.context-menu {
+    position: fixed;
+    background: inherit;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 8px 0;
+    z-index: 1200;
+    display: none;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.context-menu div {
+    padding: 10px 28px;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.context-menu div:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+body.dark .context-menu div:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.context-divider {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.2;
+    margin: 6px 0;
+    padding: 0 !important;
+}
+
+/* Custom Alert */
+.custom-alert {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    backdrop-filter: blur(12px);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 80px;
+    display: none;
+    z-index: 1100;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+body.light .custom-alert {
+    background: #222;
+}
+
+/* Animations */
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        filter: drop-shadow(0 0 2px gold);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 15px gold);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 0.4s ease;
+}
+
+.animate-shake {
+    animation: shake 0.3s ease;
+}
+
+.animate-glow {
+    animation: glow 0.5s ease;
+}
+
+.star-icon {
+    width: 24px;
+    height: 24px;
+    fill: gold;
+    stroke: gold;
+}
+/* ======================== SESSION SIDEBAR - همیشه دارک (حتی توی لایت مود) ======================== */
+.session-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 340px;
+    height: 100%;
+    transform: translateX(100%);
+    transition: 0.25s ease;
+    z-index: 200;
+    padding: 32px 24px;
+    overflow-y: auto;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    background: #1a1a1a !important;
+    border-left: 1px solid #2a2a2a !important;
+}
+
+.session-sidebar.open {
+    transform: translateX(0);
+}
+
+.session-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #eaeaea !important;
+}
+
+.close-session {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    line-height: 1;
+    color: #eaeaea !important;
+}
+
+.close-session:hover {
+    opacity: 0.6;
+}
+
+.session-divider {
+    height: 2px;
+    margin-bottom: 24px;
+    background: #2a2a2a !important;
+}
+
+.session-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #2a2a2a !important;
+}
+
+.session-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #eaeaea !important;
+}
+
+.session-meta {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    color: #eaeaea !important;
+}
+
+.session-empty {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.6;
+    color: #eaeaea !important;
+}
+
+.session-btn-timer {
+    background: none;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 8px 24px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+body.light .session-btn-timer {
+    color: #111;
+    border-color: #111;
+}
+
+body.dark .session-btn-timer {
+    color: #eaeaea;
+    border-color: #eaeaea;
+}
+
+.hamburger-session-btn {
+    display: none;
+}
+/* ======================== فقط در موبایل و لایت مود - کارت‌های سفید برای منو ======================== */
+@media (max-width: 768px) {
+    body.light .sidebar .nav-item {
+        background: #ffffff !important;
+        border: 1px solid #111111 !important;
+        border-radius: 16px !important;
+        color: #111111 !important;
+        margin-bottom: 8px;
+        transition: all 0.2s ease;
+    }
+
+    body.light .sidebar .nav-item:hover {
+        background: #f0f0f0 !important;
+        transform: translateX(4px);
+    }
+
+    body.light .sidebar .nav-item.active {
+        background: #111111 !important;
+        color: #ffffff !important;
+        border-color: #111111 !important;
+    }
+}
+
+/* دسکتاپ (بزرگتر از 768px) - بدون تغییر */
+@media (min-width: 769px) {
+    .sidebar .nav-item {
+        background: transparent !important;
+        border: none !important;
+        border-radius: 12px !important;
+    }
+    
+    body.light .sidebar .nav-item.active {
+        background: #111 !important;
+        color: #fff !important;
+    }
+    
+    body.dark .sidebar .nav-item.active {
+        background: #eaeaea !important;
+        color: #000 !important;
+    }
+}
