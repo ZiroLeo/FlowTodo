@@ -12,9 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Replace token in JS file
+      - name: Replace token in index.html
         run: |
-          sed -i "s/PLACEHOLDER_TOKEN/${{ secrets.GH_TOKEN }}/g" sctodo.js
+          sed -i "s/PLACEHOLDER_TOKEN/${{ secrets.GH_TOKEN }}/g" index.html
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
